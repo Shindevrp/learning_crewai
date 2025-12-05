@@ -1,0 +1,21 @@
+tasks:
+  - description: |
+      Research and gather comprehensive information about: {topic}
+      Analyze the data and identify key insights and findings.
+    agent: Research Analyst
+    expected_output: |
+      A detailed research report containing:
+      - Key findings
+      - Supporting data and evidence
+      - Relevant sources and references
+      
+  - description: |
+      Based on the research provided about {topic}, create a well-written article or document.
+      Ensure the content is engaging, accurate, and properly structured.
+    agent: Writer
+    expected_output: |
+      A polished written document that:
+      - Presents the research findings clearly
+      - Is well-structured with proper formatting
+      - Engages the target audience
+
