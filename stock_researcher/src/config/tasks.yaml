@@ -1,0 +1,127 @@
+stock_research_task:
+  description: >
+    Research and gather detailed stock information for {stock}.
+    Collect the following critical metrics and data:
+    1. Stock Fundamentals: Current price, 52-week high, 52-week low
+    2. Valuation Metrics: P/E ratio, EPS (Earnings Per Share), face value, book value
+    3. Sector Analysis: Sector PE ratio, sector performance, industry benchmarks
+    4. Financial Data: Revenue, earnings, profit margins, dividend yield
+    5. Technical Data: Moving averages, support/resistance levels, trading volume
+    6. Market Sentiment: Recent news, analyst ratings, insider trading activity
+    Search multiple reliable financial sources to ensure accuracy and verification.
+    Organize data in a clear, structured format for the data preparation phase.
+  expected_output: >
+    A comprehensive dataset containing:
+    - Stock fundamentals: Price, high, low, market cap, shares outstanding
+    - Key metrics: EPS, P/E ratio, sector PE, face value, book value
+    - Sector and industry context
+    - Recent performance data and trends
+    - Data source verification statement
+  agent: stock_researcher
+
+sp_benchmark_task:
+  description: >
+    Retrieve and analyze S&P 500 index performance metrics and benchmarks.
+    Gather the following information:
+    1. Index Performance: Current level, YTD return, 52-week range
+    2. Sector Performance: How each sector is performing within S&P 500
+    3. Key Metrics: Average P/E ratio, average EPS, sector weightings
+    4. Market Trends: Volatility, market breadth, sector rotation patterns
+    5. Performance Benchmarks: Historical averages for comparative analysis
+    6. Relevant Comparisons: Benchmarks applicable to {stock}'s sector
+    Provide metrics that will serve as comparison benchmarks for individual stock analysis.
+  expected_output: >
+    A comprehensive S&P 500 benchmark report containing:
+    - Current S&P 500 metrics and performance
+    - Sector-specific benchmarks and performance
+    - Relevant valuation metrics for comparison (average P/E, EPS trends)
+    - Performance baselines for {stock}'s industry sector
+    - Historical context for trend analysis
+  agent: sp_benchmark_analyst
+
+data_preparation_task:
+  description: >
+    Compile and structure stock and S&P 500 data into organized comparison formats.
+    Create the following structured outputs:
+    1. Comprehensive Data Table: Organize all collected metrics in table format
+    2. Field Organization: EPS, high, low, sector PE, face value, PE, book value
+    3. Side-by-Side Comparison: {stock} vs S&P 500 benchmarks
+    4. Structured Text File: Clean, organized data ready for visualization
+    5. Data Validation: Ensure accuracy and consistency across all fields
+    Format all data to enable smooth transition to visualization and analysis phase.
+  expected_output: >
+    A structured text file containing:
+    - Organized data table with all key metrics
+    - Stock metrics: EPS, high, low, sector PE, face value, PE, book value
+    - S&P 500 benchmarks in comparable format
+    - Side-by-side comparison structure
+    - Clean formatting ready for graphing and visual analysis
+  agent: data_processor
+  context:
+    - stock_research_task
+    - sp_benchmark_task
+
+comparison_and_visualization_task:
+  description: >
+    Generate comprehensive visual comparisons of {stock} against S&P 500 benchmarks.
+    Create the following visualizations and analysis:
+    1. Comparative Graphs: Clear graphs comparing {stock} vs S&P 500 across all metrics
+    2. Metrics Visualized: EPS, high, low, sector PE, face value, PE, book value
+    3. Comparison Table: Professional table showing side-by-side metrics
+    4. Analysis File: Written analysis of trends, performance gaps, and insights
+    5. Visual Standards: Clean, professional graphs suitable for reports and presentations
+    Use Python with matplotlib/seaborn for precise, publication-quality visualizations.
+    Include brief captions explaining key findings and comparative insights.
+  expected_output: >
+    A comprehensive analysis package containing:
+    - Professional comparison graph(s) showing {stock} vs S&P 500 metrics
+    - All specified metrics visualized: EPS, high, low, sector PE, face value, PE, book value
+    - Comparison table visualizing stock data against S&P 500 benchmarks
+    - Written analysis file documenting trend analysis and insights
+    - Identification of over/underperformance areas
+    - Professional-quality outputs suitable for investment reports
+    - All visualizations saved as high-quality images (PNG/SVG)
+  agent: financial_data_analyst
+  context:
+    - data_preparation_task
+  output_file: 'stock_analysis_summary.txt'
+
+investment_suggestion_task:
+  description: >
+    Generate investment suggestions and recommendations for {stock} based on all research and analysis.
+    Synthesize the comprehensive research, benchmark comparisons, and visualizations to provide:
+    1. Investment Recommendation: BUY / HOLD / SELL with confidence level (1-10)
+    2. Recommendation Reasoning: Clear explanation for the suggestion based on data
+    3. Key Supporting Factors: Top 3-5 metrics/factors supporting the recommendation
+    4. Risk Assessment: Primary risks and concerns to monitor
+    5. Price Targets: Suggested 6-month and 12-month price targets (if applicable)
+    6. Time Horizon: Suggested investment timeframe for this position
+    7. Bullish Case: Best-case scenario and what would validate the recommendation
+    8. Bearish Case: Worst-case scenario and warning signs to watch
+    9. Comparative Analysis: How {stock} ranks vs S&P 500 and peers
+    10. Overall Assessment: Suitability for different investor types
+    
+    CRITICAL DISCLAIMERS TO INCLUDE:
+    - This is an AI-generated suggestion and may be completely incorrect
+    - AI analysis has significant limitations and should not be relied upon for investment decisions
+    - Actual market conditions change rapidly and past analysis may become outdated
+    - Recommend consulting with qualified financial advisors before making investment decisions
+    - This analysis does not consider individual risk tolerance, financial situation, or investment goals
+  expected_output: >
+    A comprehensive investment suggestion report containing:
+    - Clear Investment Recommendation: BUY/HOLD/SELL with confidence score
+    - Detailed Reasoning: Explanation of recommendation based on analyzed data
+    - Key Metrics Summary: Top supporting and concerning metrics
+    - Risk Profile: Primary risks and mitigation strategies
+    - Price Targets: 6-month and 12-month targets with assumptions
+    - Timeline: Investment timeframe and key milestones
+    - Scenario Analysis: Bull case vs bear case with specific triggers
+    - Peer Comparison: How {stock} stacks up against competitors
+    - Suitability Assessment: For value investors, growth investors, etc.
+    - PROMINENT DISCLAIMERS: Multiple clear warnings about AI limitations
+    - Recommendation: Consult with professional financial advisors
+    - Format: Professional report suitable for personal research (NOT financial advice)
+  agent: investment_advisor
+  context:
+    - comparison_and_visualization_task
+  output_file: 'investment_suggestion_report.txt'
