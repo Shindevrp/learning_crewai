@@ -1,0 +1,29 @@
+```python
+import matplotlib.pyplot as plt
+
+# Cricketer's performance data for Virat Kohli in 2023
+metrics = ['Runs', '50\'s', '100\'s', 'Wickets', 'Highest Score']
+values = [1710, 10, 7, 0, 166]  # Wickets as 0 since he doesn't bowl
+
+# Creating the bar graph
+plt.figure(figsize=(10, 6))
+bars = plt.bar(metrics, values, color=['blue', 'green', 'orange', 'red', 'purple'])
+
+# Adding the data labels on top of each bar
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval, int(yval), va='bottom')  # va: vertical alignment
+
+# Adding titles and labels
+plt.title("Virat Kohli's Performance Metrics for the Year 2023", fontsize=16)
+plt.xlabel("Performance Metrics", fontsize=14)
+plt.ylabel("Counts / Runs", fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+
+# Displaying the graph
+plt.tight_layout()
+plt.show()
+```
+
+This code will generate a bar graph that visualizes Virat Kohli's performance metrics for the year 2023. The graph effectively highlights his runs, 50's, 100's, wickets, and highest score, making it easy to interpret his achievements throughout the year. This representation showcases Kohli's outstanding batting statistics, emphasizing his significant contributions as a top batsman.

@@ -1,0 +1,91 @@
+fetch_cricketer_scores_task:
+  description: >
+    Search and retrieve comprehensive cricket statistics for {cricketer_name} during the year {year}.
+    Find and compile all match records including:
+    1. Match details: Date, opponent, venue, format (Test/ODI/T20)
+    2. Batting statistics: Runs scored, balls faced, dismissal type
+    3. Milestone records: Centuries (100+), Fifties (50-99), Ducks
+    4. Special records: Highest score, Best partnership, Quick fire scores
+    5. Format breakdown: Separate data for Test, ODI, and T20
+    6. Consistency data: Distribution of scores
+    Search multiple reliable cricket databases and sources to ensure accuracy.
+    Present the data in a structured, organized format.
+  expected_output: >
+    A comprehensive, well-organized report containing:
+    - Complete match-by-match statistics for {cricketer_name} in {year}
+    - Total runs, average runs per match, highest score
+    - Number of centuries, fifties, and ducks
+    - Format-wise performance breakdown (Test/ODI/T20)
+    - Notable performances and milestones
+    - Data verification statement confirming source reliability
+  agent: stats_fetcher
+
+
+calculate_cricketer_averages_task:
+  description: >
+    Analyze the cricket statistics for {cricketer_name} and calculate detailed performance metrics.
+    Based on the fetched statistics, compute:
+    1. Batting Metrics: Average runs, Strike rate, Runs per innings
+    2. Consistency Metrics: Standard deviation, Best and worst performances
+    3. Format Analysis: Separate metrics for Test, ODI, T20
+    4. Performance Ratings: Rate performance as excellent/good/average/poor
+    5. Trend Analysis: Is form improving or declining? Monthly/quarterly breakdown
+    6. Milestone Analysis: Impact of centuries and fifties on team performance
+    7. Career Context: How does {year} compare to career averages?
+    8. Strength Areas: In which conditions/formats does the player excel?
+    Provide context and interpretation for each metric, not just raw numbers.
+  expected_output: >
+    A detailed analytical report including:
+    - Primary Statistics: Batting average, Strike rate, Runs per match, Success rate
+    - Format Performance: Test avg, ODI avg, T20 avg with comparative analysis
+    - Consistency Analysis: Standard deviation and form trajectory
+    - Strength Assessment: Areas of strength and improvement opportunities
+    - Performance Rating: Overall rating with justification
+    - Key Insights: What the metrics reveal about {cricketer_name}'s {year} season
+    - Milestone Impact: Effect of centuries and key performances
+    - Comparison: How {year} ranks in career performance
+  agent: stats_calculator
+  context:
+    - fetch_cricketer_scores_task
+
+create_performance_graph_task:
+  description: >
+    Create professional, publication-quality visualizations of {cricketer_name}'s {year} performance.
+    Generate the following charts and graphs:
+    1. Performance Trend Line: Runs scored across matches in {year} (showing trajectory)
+    2. Format Comparison: Bar chart comparing Test, ODI, T20 averages
+    3. Milestone Distribution: Pie chart showing centuries, fifties, and other scores
+    4. Monthly Performance: Line graph showing performance trend month by month
+    5. Consistency Heatmap: Visual representation of scoring consistency
+    6. Career Comparison: How {year} compares to career average (if available)
+    Each visualization should:
+    - Use professional color schemes and styling
+    - Include clear titles, axes labels, and legends
+    - Be suitable for reports, presentations, and social media
+    - Include brief captions explaining key insights
+  expected_output: >
+    A comprehensive visual performance report including:
+    - Performance trend graph (line chart showing runs over time)
+    - Format-wise performance comparison (bar chart)
+    - Milestone distribution chart (pie chart of score categories)
+    - Monthly performance trend (showing seasonal variation)
+    - Summary dashboard with key statistics
+    - Professional quality suitable for cricket analysis reports
+    - Visual insights highlighting peak performance periods and trends
+    - All charts saved as high-quality images (PNG/SVG)
+  agent: graph_creator
+  context:
+    - calculate_cricketer_averages_task
+  output_file: 'cricket_performance_analysis.txt'
+
+
+
+
+# text_segregator_task:
+#   description: >
+#     Segregates the provided text into age-appropriate categories for effective communication.
+#   expected_output: >
+#     The input text organized into specific age categories, such as children, teenagers, and adults.
+#   agent: text_segregator
+#   context:
+#       - text_summariser_task
