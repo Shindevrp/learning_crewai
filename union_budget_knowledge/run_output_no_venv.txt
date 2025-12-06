@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from union_budget_knowledge.main import kickoff; kickoff()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shinde/Desktop/Talbot/learning_crewai/union_budget_knowledge/src/union_budget_knowledge/main.py", line 10, in <module>
+    from litellm import completion
+ModuleNotFoundError: No module named 'litellm'

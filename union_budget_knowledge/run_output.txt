@@ -1,0 +1,17 @@
+[1m[35mFlow started with ID: d03b98e0-21db-4b8e-8415-f96fa62dd57c[0m
+Flow started with ID: d03b98e0-21db-4b8e-8415-f96fa62dd57c
+***** %%%%%
+
+, Mock response from litellm stub. Install the full litellm package for real LLM calls. ***** %%%%% 
+
+
+Please feel to ask me anything related to UNION BUDGET : ╭──────────────── Flow Execution ────────────────╮
+│                                                │
+│  Starting Flow Execution                       │
+│  Name: UnionBudgetFlow                         │
+│  ID: d03b98e0-21db-4b8e-8415-f96fa62dd57c      │
+│  Tool Args:                                    │
+│                                                │
+│                                                │
+╰────────────────────────────────────────────────╯
+
