@@ -1219,43 +1219,39 @@ result = hierarchical_crew.kickoff()
 
 ### Hierarchical Flow Example
 
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant Manager
+    participant Researcher
+    participant Analyst
+    participant Writer
+    
+    Note over Manager: Step 1: Receives 3 Tasks<br/>"I have 3 tasks to coordinate"
+    
+    Note over Manager: Step 2: Analyzes & Plans<br/>"Research first, then analysis, then writing"
+    
+    Manager->>Researcher: Step 3: Delegate Research<br/>"Start research on quantum"
+    Note over Researcher: Completes Research Work
+    Researcher-->>Manager: Submit Research Results
+    
+    Note over Manager: Validates Output<br/>Quality Check Passed
+    
+    Manager->>Analyst: Step 4: Delegate Analysis<br/>"Analyze these findings"
+    Note over Analyst: Performs Analysis
+    Analyst-->>Manager: Submit Analysis Report
+    
+    Note over Manager: Validates Analysis
+    
+    Manager->>Writer: Step 5: Delegate Writing<br/>"Create executive summary"
+    Note over Writer: Writes Document
+    Writer-->>Manager: Submit Final Document
+    
+    Note over Manager: Final Validation<br/>Process Complete!
 ```
-EXECUTION FLOW
-══════════════
 
-Step 1: Manager receives tasks
-  ┌─────────────────────────────┐
-  │ Manager: "I have 3 tasks    │
-  │ to coordinate"              │
-  └─────────────────────────────┘
-
-Step 2: Manager analyzes and plans
-  ┌─────────────────────────────┐
-  │ Manager: "Research first,   │
-  │ then analysis, then writing"│
-  └─────────────────────────────┘
-
-Step 3: Manager delegates
-  ┌─────────────────────────────┐
-  │ Manager → Researcher:       │
-  │ "Start research on quantum" │
-  └─────────────────────────────┘
-           ↓
-  ┌─────────────────────────────┐
-  │ Researcher completes work   │
-  └─────────────────────────────┘
-           ↓
-  ┌─────────────────────────────┐
-  │ Manager validates output    │
-  └─────────────────────────────┘
-           ↓
-  ┌─────────────────────────────┐
-  │ Manager → Analyst:          │
-  │ "Analyze these findings"    │
-  └─────────────────────────────┘
-           ↓
-  (Process continues...)
-```
+</div>
 
 ### Manager Agent Capabilities
 
@@ -1814,13 +1810,42 @@ llama = ChatOllama(
     temperature=0.7
 )
 
-# Free, private, no API costs
 agent = Agent(
     role="Assistant",
     goal="Help with tasks",
     backstory="Helpful assistant",
     llm=llama
 )
+```
+
+### LLM Provider Comparison
+
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Cloud["Cloud-Based LLMs"]
+        OpenAI[OpenAI GPT-4<br/>✓ Most capable<br/>✗ Costs per token]
+        Anthropic[Anthropic Claude<br/>✓ Long context<br/>✗ API costs]
+        Google[Google Gemini<br/>✓ Multimodal<br/>✗ API costs]
+    end
+    
+    subgraph Local["Local LLMs (Ollama)"]
+        Llama[Llama 2/3<br/>✓ Free & Private<br/>✗ Needs local GPU]
+        Mistral[Mistral<br/>✓ Fast & Free<br/>✗ Lower capability]
+    end
+    
+    Agent[CrewAI Agent] -.choose.-> Cloud
+    Agent -.choose.-> Local
+    
+    style Cloud fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Local fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Agent fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+```
+
+</div>
+
+```python
 LLM Configuration Options
 pythonfrom langchain_openai import ChatOpenAI
 
@@ -1834,29 +1859,47 @@ llm = ChatOpenAI(
     request_timeout=120,        # Timeout in seconds
     max_retries=2               # Retry failed requests
 )
-Temperature Guide
-TEMPERATURE SETTINGS
-════════════════════
+### Temperature Guide
 
-0.0 - 0.3: Deterministic, factual
-├─ Best for: Analysis, code, facts
-├─ Output: Consistent, focused
-└─ Example: "2+2=4"
+<div align="center">
 
-0.4 - 0.7: Balanced
-├─ Best for: General tasks, writing
-├─ Output: Varied but reasonable
-└─ Example: "Let's explore options..."
+```mermaid
+graph LR
+    subgraph Low["0.0 - 0.3: Deterministic"]
+        L1[Best for:<br/>Analysis, Code, Facts]
+        L2[Output:<br/>Consistent, Focused]
+        L3[Example:<br/>2+2=4]
+    end
+    
+    subgraph Balanced["0.4 - 0.7: Balanced"]
+        B1[Best for:<br/>General Tasks, Writing]
+        B2[Output:<br/>Varied but Reasonable]
+        B3[Example:<br/>Let's explore options...]
+    end
+    
+    subgraph Creative["0.8 - 1.0: Creative"]
+        C1[Best for:<br/>Brainstorming, Stories]
+        C2[Output:<br/>Diverse, Creative]
+        C3[Example:<br/>Imagine a world where...]
+    end
+    
+    subgraph VeryCreative["1.1 - 2.0: Very Creative"]
+        V1[Best for:<br/>Artistic Content]
+        V2[Output:<br/>Highly Unpredictable]
+        V3[Use Cautiously!]
+    end
+    
+    Low --> Balanced
+    Balanced --> Creative
+    Creative --> VeryCreative
+    
+    style Low fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Balanced fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Creative fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style VeryCreative fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+```
 
-0.8 - 1.0: Creative
-├─ Best for: Brainstorming, stories
-├─ Output: Diverse, creative
-└─ Example: "Imagine a world where..."
-
-1.1 - 2.0: Very creative (use cautiously)
-├─ Best for: Artistic content
-├─ Output: Highly unpredictable
-└─ Example: Random, wild ideas
+</div>
 Using Different LLMs for Different Agents
 pythonfrom langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
@@ -1882,6 +1925,42 @@ writer = Agent(
     backstory="Creative content specialist",
     llm=creative_llm  # High temperature
 )
+```
+
+### LLM Specialization Strategy
+
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Precision["Precision Agents"]
+        Analyst[Data Analyst<br/>temp=0.2<br/>GPT-4]
+        Coder[Code Developer<br/>temp=0.1<br/>GPT-4]
+        QA[QA Tester<br/>temp=0.3<br/>GPT-4]
+    end
+    
+    subgraph Balanced["Balanced Agents"]
+        Researcher[Researcher<br/>temp=0.5<br/>GPT-4]
+        Planner[Planner<br/>temp=0.6<br/>Claude]
+    end
+    
+    subgraph Creative["Creative Agents"]
+        Writer[Writer<br/>temp=0.9<br/>Claude]
+        Designer[Designer<br/>temp=0.8<br/>GPT-4]
+    end
+    
+    Precision -.Low Temperature.-> Tasks1[Factual Tasks]
+    Balanced -.Medium Temperature.-> Tasks2[General Tasks]
+    Creative -.High Temperature.-> Tasks3[Creative Tasks]
+    
+    style Precision fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Balanced fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Creative fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+```
+
+</div>
+
+```python
 
 crew = Crew(
     agents=[analyst, writer],
@@ -1890,27 +1969,53 @@ crew = Crew(
 )
 
 M - Memory
-Memory Types
+### Memory Types
+
 CrewAI provides three types of memory:
-MEMORY TYPES
-════════════
 
-1. SHORT-TERM MEMORY
-   ├─ Scope: Current execution
-   ├─ Duration: Single crew run
-   └─ Use: Task outputs, immediate context
+<div align="center">
 
-2. LONG-TERM MEMORY
-   ├─ Scope: Across executions
-   ├─ Duration: Persistent
-   └─ Use: Learnings, patterns, history
+```mermaid
+graph TB
+    subgraph ShortTerm["Short-Term Memory"]
+        ST1[Scope: Current Execution]
+        ST2[Duration: Single Crew Run]
+        ST3[Use: Task Outputs<br/>Immediate Context]
+    end
+    
+    subgraph LongTerm["Long-Term Memory"]
+        LT1[Scope: Across Executions]
+        LT2[Duration: Persistent]
+        LT3[Use: Learnings<br/>Patterns, History]
+    end
+    
+    subgraph Entity["Entity Memory"]
+        E1[Scope: Entities<br/>People, Places, Things]
+        E2[Duration: Persistent]
+        E3[Use: Facts About Entities]
+    end
+    
+    Crew[CrewAI Crew<br/>memory=True] --> ShortTerm
+    Crew --> LongTerm
+    Crew --> Entity
+    
+    ShortTerm -.feeds.-> LongTerm
+    LongTerm -.improves.-> Future[Future Executions]
+    Entity -.enriches.-> Future
+    
+    style Crew fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style ShortTerm fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style LongTerm fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Entity fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Future fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+```
 
-3. ENTITY MEMORY
-   ├─ Scope: Entities (people, places, things)
-   ├─ Duration: Persistent
-   └─ Use: Facts about entities
-Enabling Memory
-pythonfrom crewai import Crew, Agent, Task
+</div>
+
+### Enabling Memory
+
+```python
+from crewai import Crew, Agent, Task
 
 # Enable memory in crew
 crew = Crew(
@@ -1919,33 +2024,34 @@ crew = Crew(
     memory=True,  # Enables all memory types
     verbose=True
 )
-Memory Architecture
-MEMORY FLOW
-═══════════
+### Memory Architecture
 
-         ┌──────────────────────┐
-         │   CREW EXECUTION     │
-         └──────────┬───────────┘
-                    │
-         ┌──────────▼───────────┐
-         │  SHORT-TERM MEMORY   │
-         │  (Current session)   │
-         └──────────┬───────────┘
-                    │
-         ┌──────────▼───────────┐
-         │  LONG-TERM MEMORY    │
-         │  (Stored for future) │
-         └──────────┬───────────┘
-                    │
-         ┌──────────▼───────────┐
-         │   ENTITY MEMORY      │
-         │  (Facts about things)│
-         └──────────────────────┘
-                    │
-         ┌──────────▼───────────┐
-         │  FUTURE EXECUTIONS   │
-         │  (Improved over time)│
-         └──────────────────────┘
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant Exec as Crew Execution
+    participant STM as Short-Term Memory<br/>(Current Session)
+    participant LTM as Long-Term Memory<br/>(Persistent Storage)
+    participant EM as Entity Memory<br/>(Facts Database)
+    participant Future as Future Executions
+    
+    Exec->>STM: Store Task Outputs
+    Note over STM: Immediate Context<br/>Task Results
+    
+    STM->>LTM: Transfer Learnings
+    Note over LTM: Store Patterns<br/>Best Practices
+    
+    STM->>EM: Extract Entities
+    Note over EM: Store Facts<br/>Relationships
+    
+    LTM->>Future: Improve Performance
+    EM->>Future: Enrich Context
+    
+    Note over Future: Enhanced Execution<br/>Based on Past Experience
+```
+
+</div>
 Memory Usage Example
 pythonfrom crewai import Agent, Task, Crew
 
@@ -2242,37 +2348,35 @@ print(final_output)
 P - Planning
 What is Planning?
 Planning allows agents to create a step-by-step plan before executing tasks, improving task breakdown and execution strategy.
-Planning Architecture
-PLANNING FLOW
-═════════════
+### Planning Architecture
 
-Without Planning:
-┌──────────┐
-│   Task   │ → Direct Execution → Result
-└──────────┘
+<div align="center">
 
-With Planning:
-┌──────────┐
-│   Task   │
-└────┬─────┘
-     ↓
-┌────────────┐
-│  Planning  │
-│  Phase     │
-│ 1. Analyze │
-│ 2. Break   │
-│ 3. Order   │
-└────┬───────┘
-     ↓
-┌────────────┐
-│ Execution  │
-│  Phase     │
-│ Step 1 → 2 │
-│ Step 2 → 3 │
-│ Step 3 →..│
-└────┬───────┘
-     ↓
-  Result
+```mermaid
+graph TB
+    subgraph Without["Without Planning"]
+        T1[Task] --> DE[Direct Execution] --> R1[Result]
+    end
+    
+    subgraph With["With Planning"]
+        T2[Task]
+        T2 --> PP[Planning Phase<br/>1. Analyze Task<br/>2. Break Into Steps<br/>3. Order Steps]
+        PP --> EP[Execution Phase<br/>Step 1 → Step 2<br/>Step 2 → Step 3<br/>Step 3 → Complete]
+        EP --> R2[Result]
+    end
+    
+    style Without fill:#ffe0e0,stroke:#d32f2f,stroke-width:2px
+    style With fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style T1 fill:#ffcccc,stroke:#d32f2f,stroke-width:2px
+    style DE fill:#ffcccc,stroke:#d32f2f,stroke-width:2px
+    style R1 fill:#ffcccc,stroke:#d32f2f,stroke-width:2px
+    style T2 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style PP fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style EP fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style R2 fill:#c8e6c9,stroke:#388e3c,stroke-width:3px
+```
+
+</div>
 Enabling Planning
 pythonfrom crewai import Crew, Agent, Task
 
@@ -2558,24 +2662,33 @@ roles_research = {
     "UX Researcher": "Studies user behavior and needs",
     "Scientific Researcher": "Conducts scientific investigations"
 }
-Role Hierarchy
-ORGANIZATION STRUCTURE
-═══════════════════════
+### Role Hierarchy
 
-        ┌─────────────────┐
-        │  Project Lead   │
-        │  (Coordinator)  │
-        └────────┬────────┘
-                 │
-        ┌────────┴────────┐
-        │                 │
-  ┌─────▼─────┐    ┌─────▼─────┐
-  │Senior Role│    │Senior Role│
-  └─────┬─────┘    └─────┬─────┘
-        │                 │
-  ┌─────▼─────┐    ┌─────▼─────┐
-  │Junior Role│    │Junior Role│
-  └───────────┘    └───────────┘
+<div align="center">
+
+```mermaid
+graph TB
+    Lead[Project Lead<br/>Coordinator & Decision Maker]
+    
+    Lead --> Senior1[Senior Technical Architect<br/>System Design]
+    Lead --> Senior2[Senior Content Strategist<br/>Content Direction]
+    
+    Senior1 --> Junior1[Backend Developer<br/>API Development]
+    Senior1 --> Junior2[DevOps Engineer<br/>Infrastructure]
+    
+    Senior2 --> Junior3[Content Writer<br/>Article Creation]
+    Senior2 --> Junior4[SEO Specialist<br/>Optimization]
+    
+    style Lead fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Senior1 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Senior2 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Junior1 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Junior2 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Junior3 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Junior4 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
+
+</div>
 Creating Effective Roles
 python# BAD ROLES - Too vague
 agent1 = Agent(
@@ -2644,31 +2757,32 @@ writing_task = Task(
 S - Sequential Process
 Definition
 Sequential process executes tasks one after another in a defined order, where each task can use the output of previous tasks.
-Sequential Flow
-SEQUENTIAL EXECUTION
-═══════════════════════
 
-┌──────────────┐
-│   Task 1     │  Research
-│   (Agent 1)  │
-└──────┬───────┘
-       │
-       │ Output feeds into...
-       ↓
-┌──────────────┐
-│   Task 2     │  Analysis  
-│   (Agent 2)  │
-└──────┬───────┘
-       │
-       │ Output feeds into...
-       ↓
-┌──────────────┐
-│   Task 3     │  Writing
-│   (Agent 3)  │
-└──────┬───────┘
-       │
-       ↓
-  FINAL OUTPUT
+### Sequential Flow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant Start as Start
+    participant T1 as Task 1<br/>Research<br/>(Agent 1)
+    participant T2 as Task 2<br/>Analysis<br/>(Agent 2)
+    participant T3 as Task 3<br/>Writing<br/>(Agent 3)
+    participant Final as Final Output
+    
+    Start->>T1: Execute
+    Note over T1: Perform Research<br/>Gather Information
+    T1->>T2: Output feeds into...
+    Note over T2: Analyze Research<br/>Extract Insights
+    T2->>T3: Output feeds into...
+    Note over T3: Create Content<br/>Write Article
+    T3->>Final: Complete
+    
+    Note over Final: ✓ Sequential Execution Complete
+```
+
+</div>
+
 Creating Sequential Crews
 pythonfrom crewai import Crew, Agent, Task, Process
 
@@ -2847,36 +2961,33 @@ final_article = content_pipeline.kickoff()
 T - Tasks
 Definition
 A Task is a specific assignment given to an agent. It includes what needs to be done, who should do it, and what the expected output is.
-Task Anatomy
-TASK STRUCTURE
-══════════════
+### Task Anatomy
 
-┌─────────────────────────────┐
-│        TASK OBJECT          │
-├─────────────────────────────┤
-│                             │
-│ description:                │
-│   What to do (detailed)     │
-│                             │
-│ agent:                      │
-│   Who does it               │
-│                             │
-│ expected_output:            │
-│   Success criteria          │
-│                             │
-│ context:                    │
-│   Input from other tasks    │
-│                             │
-│ tools:                      │
-│   Additional tools          │
-│                             │
-│ output_file:                │
-│   Where to save (optional)  │
-│                             │
-│ output_json:                │
-│   Output format (optional)  │
-│                             │
-└─────────────────────────────┘
+<div align="center">
+
+```mermaid
+graph TB
+    Task[Task Object]
+    
+    Task --> Desc[description<br/>What to do - detailed instructions]
+    Task --> Agent[agent<br/>Who performs the task]
+    Task --> Output[expected_output<br/>Success criteria & deliverables]
+    Task --> Context[context<br/>Input from other tasks - optional]
+    Task --> Tools[tools<br/>Additional tools - optional]
+    Task --> File[output_file<br/>Save location - optional]
+    Task --> JSON[output_json<br/>Structured format - optional]
+    
+    style Task fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Desc fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Agent fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Output fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Context fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Tools fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style File fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style JSON fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
+
+</div>
 Creating Tasks
 pythonfrom crewai import Task
 
@@ -3034,51 +3145,68 @@ sync_task = Task(
 )
 
 U - Use Cases
-Real-World Applications
-CREWAI USE CASES BY INDUSTRY
-═════════════════════════════
 
-BUSINESS
-├─ Market Research
-├─ Competitive Analysis
-├─ Business Intelligence
-├─ Report Automation
-└─ Strategy Development
+### Real-World Applications
 
-MARKETING
-├─ Content Creation
-├─ Social Media Management
-├─ SEO Optimization
-├─ Campaign Planning
-└─ Brand Monitoring
+<div align="center">
 
-TECHNOLOGY
-├─ Code Review
-├─ Documentation
-├─ Bug Analysis
-├─ Testing Automation
-└─ System Design
+```mermaid
+graph TB
+    CrewAI[CrewAI Applications]
+    
+    CrewAI --> Business[Business<br/>Intelligence]
+    CrewAI --> Marketing[Marketing<br/>& Content]
+    CrewAI --> Tech[Technology<br/>& DevOps]
+    CrewAI --> Research[Research<br/>& Analysis]
+    CrewAI --> Finance[Finance<br/>& Trading]
+    CrewAI --> Health[Healthcare<br/>& Medical]
+    
+    Business --> B1[Market Research]
+    Business --> B2[Competitive Analysis]
+    Business --> B3[Business Intelligence]
+    Business --> B4[Report Automation]
+    Business --> B5[Strategy Development]
+    
+    Marketing --> M1[Content Creation]
+    Marketing --> M2[Social Media Management]
+    Marketing --> M3[SEO Optimization]
+    Marketing --> M4[Campaign Planning]
+    Marketing --> M5[Brand Monitoring]
+    
+    Tech --> T1[Code Review]
+    Tech --> T2[Documentation]
+    Tech --> T3[Bug Analysis]
+    Tech --> T4[Testing Automation]
+    Tech --> T5[System Design]
+    
+    Research --> R1[Literature Review]
+    Research --> R2[Data Analysis]
+    Research --> R3[Hypothesis Testing]
+    Research --> R4[Report Generation]
+    Research --> R5[Citation Management]
+    
+    Finance --> F1[Investment Research]
+    Finance --> F2[Risk Analysis]
+    Finance --> F3[Portfolio Management]
+    Finance --> F4[Market Analysis]
+    Finance --> F5[Financial Reporting]
+    
+    Health --> H1[Patient Data Analysis]
+    Health --> H2[Medical Literature Review]
+    Health --> H3[Treatment Planning]
+    Health --> H4[Research Synthesis]
+    Health --> H5[Health Monitoring]
+    
+    style CrewAI fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Business fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Marketing fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Tech fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Research fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style Finance fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style Health fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+```
 
-RESEARCH
-├─ Literature Review
-├─ Data Analysis
-├─ Hypothesis Testing
-├─ Report Generation
-└─ Citation Management
-
-FINANCE
-├─ Investment Research
-├─ Risk Analysis
-├─ Portfolio Management
-├─ Market Analysis
-└─ Financial Reporting
-
-HEALTHCARE
-├─ Patient Data Analysis
-├─ Medical Literature Review
-├─ Treatment Planning
-├─ Research Synthesis
-└─ Health Monitoring
+</div>
 Complete Use Case Examples
 Use Case 1: Content Marketing Pipeline
 pythonfrom crewai import Agent, Task, Crew, Process
@@ -4969,34 +5097,70 @@ Comprehensive patterns and strategies for building production-grade CrewAI appli
 
 Organize your CrewAI project into clear layers for maintainability:
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Project["Layer-Based Architecture"]
+        Main[main.py<br/>Entry Point]
+        
+        subgraph Agents["agents/<br/>Agent Definitions"]
+            A1[base.py]
+            A2[researcher.py]
+            A3[analyst.py]
+        end
+        
+        subgraph Tasks["tasks/<br/>Task Definitions"]
+            T1[base.py]
+            T2[research.py]
+            T3[analysis.py]
+        end
+        
+        subgraph Crews["crews/<br/>Crew Orchestration"]
+            C1[base.py]
+            C2[research_crew.py]
+            C3[analysis_crew.py]
+        end
+        
+        subgraph Tools["tools/<br/>Custom Tools"]
+            To1[base.py]
+            To2[search_tool.py]
+            To3[data_tool.py]
+        end
+        
+        subgraph Config["config/<br/>Configuration"]
+            Cf1[agents.yaml]
+            Cf2[tasks.yaml]
+            Cf3[settings.py]
+        end
+        
+        subgraph Utils["utils/<br/>Utilities"]
+            U1[logging.py]
+            U2[validators.py]
+            U3[helpers.py]
+        end
+        
+        Main --> Crews
+        Crews --> Agents
+        Crews --> Tasks
+        Agents --> Tools
+        Agents --> Config
+        Tasks --> Config
+        Agents --> Utils
+        Tasks --> Utils
+    end
+    
+    style Project fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Main fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
+    style Agents fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Tasks fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Crews fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style Tools fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style Config fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Utils fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
 ```
-PROJECT STRUCTURE
-├── agents/           # Agent definitions
-│   ├── base.py      # Base agent classes
-│   ├── researcher.py
-│   └── analyst.py
-├── tasks/           # Task definitions
-│   ├── base.py
-│   ├── research.py
-│   └── analysis.py
-├── crews/           # Crew orchestration
-│   ├── base.py
-│   ├── research_crew.py
-│   └── analysis_crew.py
-├── tools/           # Custom tools
-│   ├── base.py
-│   ├── search_tool.py
-│   └── data_tool.py
-├── config/          # Configuration
-│   ├── agents.yaml
-│   ├── tasks.yaml
-│   └── settings.py
-├── utils/           # Utilities
-│   ├── logging.py
-│   ├── validators.py
-│   └── helpers.py
-└── main.py          # Entry point
-```
+
+</div>
 
 **Implementation:**
 
