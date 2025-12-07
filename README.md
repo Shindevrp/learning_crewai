@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![CrewAI Banner](https://raw.githubusercontent.com/joaomdmoura/crewAI/main/docs/crewai_logo.png)
+<img src="https://github.com/joaomdmoura/crewAI/raw/main/docs/crewai_logo.png" alt="CrewAI Logo" width="400"/>
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
 [![CrewAI Framework](https://img.shields.io/badge/powered%20by-crewai-orange)](https://crewai.com)
