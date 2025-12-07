@@ -53,36 +53,112 @@ Union Budget Knowledge Crew is a sophisticated CrewAI-based system designed to e
 
 ## Architecture
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph User["User Interface"]
+        QUERY[Budget Query<br/>Natural Language]
+    end
+    
+    subgraph Router["Query Router"]
+        CLASSIFIER[Query Classifier<br/>Budget vs Internet]
+    end
+    
+    subgraph BudgetCrew["Budget Response Crew"]
+        BA[Budget Analyst<br/>Document Analysis]
+        PE[Policy Extractor<br/>Policy Details]
+        FA[Financial Advisor<br/>Fiscal Insights]
+    end
+    
+    subgraph InternetCrew["Internet Response Crew"]
+        WEB[Web Researcher<br/>Online Search]
+        SYNTH[Info Synthesizer<br/>Response Builder]
+    end
+    
+    subgraph Knowledge["Knowledge Base"]
+        PDF[Union Budget PDF<br/>2023-24]
+        CHUNKS[Indexed Chunks<br/>Embeddings]
+        META[Metadata Store<br/>Citations]
+    end
+    
+    subgraph External["External Services"]
+        OPENAI[OpenAI GPT-4<br/>LLM Processing]
+        SERPER[Serper API<br/>Web Search]
+    end
+    
+    subgraph Output["Response"]
+        ANSWER[Detailed Answer<br/>With Citations]
+    end
+    
+    QUERY --> CLASSIFIER
+    
+    CLASSIFIER -->|Budget Related| BudgetCrew
+    CLASSIFIER -->|General Query| InternetCrew
+    
+    BudgetCrew --> Knowledge
+    Knowledge --> PDF
+    Knowledge --> CHUNKS
+    Knowledge --> META
+    
+    InternetCrew --> SERPER
+    
+    BudgetCrew --> OPENAI
+    InternetCrew --> OPENAI
+    
+    BA --> ANSWER
+    PE --> ANSWER
+    FA --> ANSWER
+    WEB --> ANSWER
+    SYNTH --> ANSWER
+    
+    style User fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Router fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style BudgetCrew fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style InternetCrew fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Knowledge fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style External fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    style Output fill:#fff9c4,stroke:#f57f17,stroke-width:2px
 ```
-┌─────────────────────────────────────────────────────────┐
-│                  User Interface (CLI)                    │
-└────────────────────────┬────────────────────────────────┘
-                         │
-         ┌───────────────┴───────────────┐
-         │                               │
-    ┌────▼──────────┐          ┌────────▼─────┐
-    │ Query Parser  │          │ Knowledge    │
-    │               │          │ Retrieval    │
-    └────┬──────────┘          └────┬─────────┘
-         │                          │
-    ┌────▼──────────────────────────▼────┐
-    │      Union Budget Crew              │
-    │  ┌──────────────────────────────┐   │
-    │  │  Budget Analysis Agent       │   │
-    │  │  Policy Extraction Agent     │   │
-    │  │  Financial Advisor Agent     │   │
-    │  │  Context Agent               │   │
-    │  └──────────────────────────────┘   │
-    └────┬─────────────────────────────────┘
-         │
-    ┌────▼──────────────────────┐
-    │  Knowledge Base           │
-    │  - PDF Documents          │
-    │  - Indexed Chunks         │
-    │  - Embeddings             │
-    │  - Metadata               │
-    └───────────────────────────┘
+
+</div>
+
+### Processing Flow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant Classifier
+    participant BudgetCrew
+    participant InternetCrew
+    participant Knowledge
+    participant LLM
+    
+    User->>System: Submit Query
+    System->>Classifier: Classify Query Type
+    
+    alt Budget Related Query
+        Classifier->>BudgetCrew: Route to Budget Crew
+        BudgetCrew->>Knowledge: Search PDF Documents
+        Knowledge-->>BudgetCrew: Relevant Sections
+        BudgetCrew->>LLM: Analyze Context
+        LLM-->>BudgetCrew: Insights
+        BudgetCrew-->>System: Answer with Citations
+    else General Query
+        Classifier->>InternetCrew: Route to Internet Crew
+        InternetCrew->>InternetCrew: Web Search
+        InternetCrew->>LLM: Synthesize Information
+        LLM-->>InternetCrew: Response
+        InternetCrew-->>System: General Answer
+    end
+    
+    System->>User: Deliver Response
 ```
+
+</div>
 
 ## Prerequisites
 

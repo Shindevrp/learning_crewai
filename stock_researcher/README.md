@@ -121,6 +121,118 @@ python main.py
 
 ## Project Architecture
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Input["User Input"]
+        SYMBOL[Stock Symbol<br/>e.g., AAPL]
+    end
+    
+    subgraph Crew["Stock Analysis Crew"]
+        subgraph Research["Research Phase"]
+            SR[Stock Researcher<br/>Fundamental Data]
+            SP[S&P Benchmark Analyst<br/>Index Metrics]
+        end
+        
+        subgraph Processing["Processing Phase"]
+            DP[Data Processor<br/>Structure & Format]
+        end
+        
+        subgraph Analysis["Analysis Phase"]
+            FDA[Financial Analyst<br/>Visualizations & Insights]
+            PC[Project Coordinator<br/>Quality Control]
+        end
+        
+        subgraph Advisory["Advisory Phase"]
+            IA[Investment Advisor<br/>Recommendations]
+        end
+    end
+    
+    subgraph External["External Data Sources"]
+        SERPER[Serper API<br/>Web Search]
+        YAHOO[Yahoo Finance]
+        BLOOMBERG[Bloomberg]
+        SEC[SEC Filings]
+    end
+    
+    subgraph Output["Generated Reports"]
+        DATA[stock_sp500_data.txt<br/>Structured Data]
+        ANALYSIS[stock_analysis_summary.txt<br/>Visualizations]
+        SUGGEST[investment_suggestion_report.txt<br/>Recommendations]
+        LOGS[stock_analysis_logs.txt<br/>Execution Logs]
+    end
+    
+    SYMBOL --> Research
+    
+    SR --> SERPER
+    SERPER --> YAHOO
+    SERPER --> BLOOMBERG
+    SERPER --> SEC
+    
+    Research --> DP
+    DP --> Analysis
+    Analysis --> Advisory
+    
+    DP --> DATA
+    FDA --> ANALYSIS
+    IA --> SUGGEST
+    PC --> LOGS
+    
+    style Input fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Crew fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Research fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Processing fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Analysis fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Advisory fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style External fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Output fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+```
+
+</div>
+
+### Execution Flow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Main
+    participant Researcher
+    participant Benchmark
+    participant Processor
+    participant Analyst
+    participant Advisor
+    
+    User->>Main: Execute with Stock Symbol
+    Main->>Researcher: Task 1: Research Stock Data
+    Researcher->>Researcher: Query Yahoo Finance, Bloomberg, SEC
+    Researcher-->>Main: Stock Fundamentals
+    
+    Main->>Benchmark: Task 2: Get S&P 500 Data
+    Benchmark->>Benchmark: Analyze Index Metrics
+    Benchmark-->>Main: Benchmark Data
+    
+    Main->>Processor: Task 3: Structure Data
+    Processor->>Processor: Format & Organize
+    Processor-->>Main: stock_sp500_data.txt
+    
+    Main->>Analyst: Task 4: Generate Analysis
+    Analyst->>Analyst: Create Visualizations
+    Analyst-->>Main: stock_analysis_summary.txt
+    
+    Main->>Advisor: Task 5: Generate Recommendation
+    Advisor->>Advisor: Synthesize & Recommend
+    Advisor-->>Main: investment_suggestion_report.txt
+    
+    Main->>User: Complete Analysis Package
+```
+
+</div>
+
+### File Structure
+
 ```
 stock_researcher/
 ├── src/

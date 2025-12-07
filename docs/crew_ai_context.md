@@ -62,28 +62,65 @@ Think of CrewAI as a **company structure for AI agents**: you have specialists (
 
 ### Real-World Use Cases
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Content["Content Creation"]
+        Blog[Blog Posts<br/>Articles]
+        Social[Social Media<br/>Campaigns]
+        Marketing[Marketing Copy<br/>Ad Content]
+    end
+    
+    subgraph Research["Research & Analysis"]
+        Market[Market Research<br/>Competitor Analysis]
+        Data[Data Gathering<br/>Information Synthesis]
+        Trends[Trend Analysis<br/>Forecasting]
+    end
+    
+    subgraph Business["Business Automation"]
+        Reports[Report Generation<br/>Analytics]
+        Email[Email Workflows<br/>Notifications]
+        Process[Data Processing<br/>ETL Operations]
+    end
+    
+    subgraph Support["Customer Support"]
+        Tickets[Ticket Routing<br/>Classification]
+        Query[Query Resolution<br/>Problem Solving]
+        FAQ[FAQ Automation<br/>Knowledge Base]
+    end
+    
+    subgraph Scientific["Scientific Research"]
+        Literature[Literature Review<br/>Paper Analysis]
+        Hypothesis[Hypothesis Testing<br/>Experiments]
+        Synthesis[Result Synthesis<br/>Publication]
+    end
+    
+    subgraph DataAnalysis["Data Analysis"]
+        Clean[Data Cleaning<br/>Preprocessing]
+        Visual[Visualization<br/>Charts & Graphs]
+        ReportGen[Report Creation<br/>Insights]
+    end
+    
+    CrewAI[CrewAI Framework<br/>Multi-Agent System]
+    
+    CrewAI -.powers.-> Content
+    CrewAI -.powers.-> Research
+    CrewAI -.powers.-> Business
+    CrewAI -.powers.-> Support
+    CrewAI -.powers.-> Scientific
+    CrewAI -.powers.-> DataAnalysis
+    
+    style CrewAI fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Content fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Research fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Business fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Support fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style Scientific fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style DataAnalysis fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     CREWAI USE CASES                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Content Creation          Research & Analysis              │
-│  - Blog posts               - Market research              │
-│  - Social media             - Competitive analysis         │
-│  - Marketing copy           - Data gathering               │
-│                                                             │
-│  Business Automation      Customer Support                 │
-│  - Report generation        - Ticket routing               │
-│  - Email workflows          - Query resolution             │
-│  - Data processing          - FAQ automation               │
-│                                                             │
-│  Scientific Research      Data Analysis                   │
-│  - Literature review        - Data cleaning                │
-│  - Hypothesis testing       - Visualization                │
-│  - Result synthesis         - Report creation              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+
+</div>
 
 ### CrewAI vs. Other Frameworks
 
@@ -224,26 +261,30 @@ reviewer = Agent(
 
 ### Agent Collaboration Flow
 
-```
-TASK EXECUTION FLOW
-═══════════════════
+<div align="center">
 
-1. SEQUENTIAL (One after another)
-   ┌──────────┐    ┌──────────┐    ┌──────────┐
-   │Researcher│ -> │ Analyst  │ -> │  Writer  │
-   └──────────┘    └──────────┘    └──────────┘
-   
-2. HIERARCHICAL (Manager coordinates)
-        ┌──────────┐
-        │ Manager  │
-        └─────┬────┘
-              │
-      ┌───────┼───────┐
-      ↓       ↓       ↓
-   ┌─────┐ ┌─────┐ ┌─────┐
-   │Res. │ │Anal.│ │Write│
-   └─────┘ └─────┘ └─────┘
+```mermaid
+graph LR
+    subgraph Sequential["1. Sequential Process (Linear)"]
+        direction LR
+        Res[Researcher] --> Ana[Analyst]
+        Ana --> Wri[Writer]
+    end
+    
+    subgraph Hierarchical["2. Hierarchical Process (Coordinated)"]
+        direction TB
+        Manager[Manager Agent<br/>Coordinator]
+        Manager --> R[Researcher]
+        Manager --> A[Analyst]
+        Manager --> W[Writer]
+    end
+    
+    style Sequential fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Hierarchical fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Manager fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
 ```
+
+</div>
 
 ---
 
@@ -320,38 +361,51 @@ A **Crew** is a collection of agents working together to accomplish a set of tas
 
 ### Crew Structure
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph CrewConfig["Crew Configuration"]
+        Process[Process Type<br/>Sequential/Hierarchical]
+        Memory[Memory Settings<br/>Short-term/Long-term]
+        Verbose[Verbose Mode<br/>Logging Level]
+    end
+    
+    subgraph Agents["Agents Layer (WHO)"]
+        Agent1[Agent 1<br/>Role & Goal]
+        Agent2[Agent 2<br/>Role & Goal]
+        Agent3[Agent 3<br/>Role & Goal]
+    end
+    
+    subgraph Tasks["Tasks Layer (WHAT)"]
+        Task1[Task 1<br/>Description & Output]
+        Task2[Task 2<br/>Description & Output]
+        Task3[Task 3<br/>Description & Output]
+    end
+    
+    subgraph Execution["Execution Engine"]
+        Orchestrator[Task Orchestrator<br/>Workflow Manager]
+        Output[Final Output<br/>Aggregated Results]
+    end
+    
+    CrewConfig --> Orchestrator
+    Agent1 -.assigned to.-> Task1
+    Agent2 -.assigned to.-> Task2
+    Agent3 -.assigned to.-> Task3
+    
+    Task1 --> Orchestrator
+    Task2 --> Orchestrator
+    Task3 --> Orchestrator
+    
+    Orchestrator --> Output
+    
+    style CrewConfig fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Agents fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Tasks fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Execution fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
 ```
-┌────────────────────────────────────────────┐
-│              CREW ARCHITECTURE             │
-├────────────────────────────────────────────┤
-│                                            │
-│  ┌──────────────────────────────────────┐ │
-│  │         CREW CONFIGURATION           │ │
-│  │  - Process Type (Sequential/Hier.)   │ │
-│  │  - Memory Settings                   │ │
-│  │  - Verbose Mode                      │ │
-│  └──────────────────────────────────────┘ │
-│                    │                       │
-│         ┌──────────┴──────────┐           │
-│         ↓                     ↓           │
-│  ┌────────────┐        ┌────────────┐    │
-│  │   AGENTS   │        │   TASKS    │    │
-│  │  (Who)     │        │  (What)    │    │
-│  ├────────────┤        ├────────────┤    │
-│  │ Agent 1    │        │ Task 1     │    │
-│  │ Agent 2    │   ←→   │ Task 2     │    │
-│  │ Agent 3    │        │ Task 3     │    │
-│  └────────────┘        └────────────┘    │
-│         │                     │           │
-│         └──────────┬──────────┘           │
-│                    ↓                       │
-│           ┌─────────────────┐             │
-│           │   EXECUTION     │             │
-│           │  & OUTPUT       │             │
-│           └─────────────────┘             │
-│                                            │
-└────────────────────────────────────────────┘
-```
+
+</div>
 
 ### Creating a Crew
 
@@ -778,30 +832,23 @@ CrewAI supports two main process types:
 
 ### Sequential Process
 
-```
-SEQUENTIAL FLOW
-═══════════════
+<div align="center">
 
-Task 1 → Task 2 → Task 3 → Result
-
-┌─────────┐
-│ Task 1  │ Start with research
-└────┬────┘
-     │ Output becomes input for Task 2
-     ↓
-┌─────────┐
-│ Task 2  │ Analyze research
-└────┬────┘
-     │ Output becomes input for Task 3
-     ↓
-┌─────────┐
-│ Task 3  │ Write report
-└────┬────┘
-     │
-     ↓
-  FINAL
-  OUTPUT
+```mermaid
+graph LR
+    Start([Start]) --> T1[Task 1<br/>Research]
+    T1 -->|Output| T2[Task 2<br/>Analysis]
+    T2 -->|Output| T3[Task 3<br/>Writing]
+    T3 --> End([Final Output])
+    
+    style Start fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style T1 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style T2 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style T3 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style End fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
+
+</div>
 
 ```python
 from crewai import Crew, Process
@@ -815,27 +862,26 @@ crew = Crew(
 
 ### Hierarchical Process
 
-```
-HIERARCHICAL FLOW
-═════════════════
+<div align="center">
 
-                ┌──────────┐
-                │ Manager  │ Coordinates everything
-                └────┬─────┘
-                     │
-        ┌────────────┼────────────┐
-        │            │            │
-        ↓            ↓            ↓
-   ┌────────┐  ┌────────┐  ┌────────┐
-   │ Agent1 │  │ Agent2 │  │ Agent3 │
-   │ Task A │  │ Task B │  │ Task C │
-   └────┬───┘  └────┬───┘  └────┬───┘
-        │           │           │
-        └───────────┴───────────┘
-                    │
-                    ↓
-            COMBINED OUTPUT
+```mermaid
+graph TB
+    Manager[Manager Agent<br/>Coordinator] --> A1[Agent 1<br/>Task A]
+    Manager --> A2[Agent 2<br/>Task B]
+    Manager --> A3[Agent 3<br/>Task C]
+    
+    A1 --> Combine[Combined Output<br/>Synthesized Result]
+    A2 --> Combine
+    A3 --> Combine
+    
+    style Manager fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style A1 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style A2 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style A3 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Combine fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
+
+</div>
 
 ```python
 from crewai import Crew, Process
@@ -1023,34 +1069,95 @@ In a **hierarchical process**, a manager agent coordinates and delegates tasks t
 
 ### Hierarchical Architecture
 
-```
-HIERARCHICAL STRUCTURE
-════════════════════════
+<div align="center">
 
-                    ┌─────────────────┐
-                    │  MANAGER AGENT  │
-                    │  (Auto-created) │
-                    │                 │
-                    │  Responsibilities:│
-                    │  • Delegate tasks│
-                    │  • Validate work │
-                    │  • Synthesize    │
-                    └────────┬─────────┘
-                             │
-                  ┌──────────┼──────────┐
-                  │          │          │
-            ┌─────▼────┐ ┌──▼─────┐ ┌──▼─────┐
-            │ WORKER 1 │ │WORKER 2│ │WORKER 3│
-            │          │ │        │ │        │
-            │ Research │ │Analysis│ │Writing │
-            └──────────┘ └────────┘ └────────┘
-                  │          │          │
-                  └──────────┼──────────┘
-                             │
-                      ┌──────▼──────┐
-                      │   OUTPUT    │
-                      └─────────────┘
+```mermaid
+graph TB
+    subgraph Input["Input"]
+        Tasks[Task Pool<br/>3 Tasks to Complete]
+    end
+    
+    subgraph Manager["Manager Agent (Auto-Created)"]
+        Delegate[Task Delegation<br/>Strategic Planning]
+        Validate[Work Validation<br/>Quality Control]
+        Synthesize[Result Synthesis<br/>Final Output]
+    end
+    
+    subgraph Workers["Worker Agents"]
+        W1[Worker 1<br/>Research Specialist]
+        W2[Worker 2<br/>Data Analysis]
+        W3[Worker 3<br/>Content Writing]
+    end
+    
+    subgraph Output["Output"]
+        Result[Coordinated Result<br/>Aggregated Output]
+    end
+    
+    Tasks --> Delegate
+    Delegate --> W1
+    Delegate --> W2
+    Delegate --> W3
+    
+    W1 --> Validate
+    W2 --> Validate
+    W3 --> Validate
+    
+    Validate --> Synthesize
+    Synthesize --> Result
+    
+    style Input fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Manager fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Workers fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Output fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
 ```
+
+</div>
+
+### Hierarchical Execution Flow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Manager as Manager Agent
+    participant R as Researcher
+    participant A as Analyst
+    participant W as Writer
+    participant LLM as GPT-4
+    
+    User->>Manager: Submit 3 Tasks
+    
+    Note over Manager: Step 1: Analyze & Plan
+    Manager->>LLM: Coordinate Workflow
+    LLM-->>Manager: Task Priority & Dependencies
+    
+    Note over Manager,R: Step 2: Delegate Research
+    Manager->>R: "Research quantum computing"
+    R->>LLM: Execute Research
+    LLM-->>R: Research Results
+    R->>Manager: Submit Findings
+    
+    Note over Manager,A: Step 3: Delegate Analysis
+    Manager->>A: "Analyze business impact"
+    A->>LLM: Execute Analysis
+    LLM-->>A: Analysis Results
+    A->>Manager: Submit Analysis
+    
+    Note over Manager,W: Step 4: Delegate Writing
+    Manager->>W: "Create executive summary"
+    W->>LLM: Execute Writing
+    LLM-->>W: Written Content
+    W->>Manager: Submit Document
+    
+    Note over Manager: Step 5: Validate & Synthesize
+    Manager->>LLM: Review All Work
+    LLM-->>Manager: Quality Assessment
+    
+    Manager->>User: Deliver Final Output
+```
+
+</div>
 
 ### When to Use Hierarchical Process
 
@@ -3323,25 +3430,43 @@ A **workflow** is the complete process from defining agents and tasks to executi
 
 ### Basic Workflow Pattern
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Step1["1. Define Agents"]
+        Agents[Create Agents<br/>Roles, Goals, Backstories]
+    end
+    
+    subgraph Step2["2. Define Tasks"]
+        Tasks[Create Tasks<br/>Descriptions, Expected Outputs]
+    end
+    
+    subgraph Step3["3. Create Crew"]
+        Crew[Combine Agents & Tasks<br/>Set Process Type]
+    end
+    
+    subgraph Step4["4. Execute"]
+        Kickoff[Run crew.kickoff<br/>Start Execution]
+    end
+    
+    subgraph Step5["5. Process Output"]
+        Output[Use Results<br/>Save/Display/Process]
+    end
+    
+    Agents --> Tasks
+    Tasks --> Crew
+    Crew --> Kickoff
+    Kickoff --> Output
+    
+    style Step1 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Step2 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Step3 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Step4 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Step5 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
-STANDARD WORKFLOW
-═════════════════
 
-1. DEFINE AGENTS
-   └─ Create agents with roles, goals, backstories
-
-2. DEFINE TASKS
-   └─ Create tasks with descriptions, expected outputs
-
-3. CREATE CREW
-   └─ Combine agents and tasks with process type
-
-4. EXECUTE
-   └─ Run crew.kickoff() to start execution
-
-5. PROCESS OUTPUT
-   └─ Use results for your application
-```
+</div>
 
 ### Complete Workflow Example
 
@@ -3630,20 +3755,40 @@ result = crew.kickoff(inputs={
 
 ### Execution Modes
 
-```
-EXECUTION TYPES
-═══════════════
+<div align="center">
 
-1. SYNCHRONOUS (Default)
-   - Waits for completion
-   - Returns result immediately
-   - Blocks execution
-
-2. ASYNCHRONOUS
-   - Non-blocking
-   - Returns immediately
-   - Check status separately
+```mermaid
+graph TB
+    subgraph Sync["Synchronous Execution"]
+        direction TB
+        SyncStart[Start Execution] --> SyncWait[Wait for Completion<br/>Blocking]
+        SyncWait --> SyncResult[Return Result]
+    end
+    
+    subgraph Async["Asynchronous Execution"]
+        direction TB
+        AsyncStart[Start Execution] --> AsyncReturn[Return Immediately<br/>Non-Blocking]
+        AsyncReturn --> AsyncCheck[Check Status Later]
+        AsyncCheck --> AsyncResult[Get Result When Ready]
+    end
+    
+    subgraph Parallel["Parallel Execution"]
+        direction TB
+        ParallelStart[Start Multiple Crews]
+        ParallelStart --> C1[Crew 1<br/>Async]
+        ParallelStart --> C2[Crew 2<br/>Async]
+        ParallelStart --> C3[Crew 3<br/>Async]
+        C1 --> Gather[Gather Results]
+        C2 --> Gather
+        C3 --> Gather
+    end
+    
+    style Sync fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Async fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Parallel fill:#fff3e0,stroke:#f57c00,stroke-width:2px
 ```
+
+</div>
 
 ### Synchronous Execution
 
@@ -4211,6 +4356,76 @@ YAML CONFIGURATION TIPS
 ### Complete Guide: Development to Deployment
 
 This section covers everything you need to take a CrewAI project from idea to production.
+
+### Production Architecture
+
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Development["Development Phase"]
+        Setup[Project Setup<br/>Virtual Env & Dependencies]
+        Config[Configuration<br/>.env & YAML Files]
+        Implement[Implementation<br/>Agents, Tasks, Crew]
+        Test[Testing<br/>Unit & Integration]
+    end
+    
+    subgraph Optimization["Optimization Phase"]
+        Cache[Caching<br/>Response Cache]
+        RateLimit[Rate Limiting<br/>API Throttling]
+        Async[Async Execution<br/>Non-Blocking]
+        Perf[Performance Tuning<br/>Resource Optimization]
+    end
+    
+    subgraph Deployment["Deployment Options"]
+        Docker[Docker Container<br/>Containerized App]
+        API[FastAPI Service<br/>REST API]
+        Cloud[Cloud Platform<br/>AWS/Azure/GCP]
+    end
+    
+    subgraph Production["Production Environment"]
+        LB[Load Balancer<br/>Traffic Distribution]
+        App1[App Instance 1]
+        App2[App Instance 2]
+        App3[App Instance 3]
+        Monitor[Monitoring<br/>Logs & Metrics]
+        Alerts[Alerting<br/>Error Tracking]
+    end
+    
+    Setup --> Config
+    Config --> Implement
+    Implement --> Test
+    
+    Test --> Cache
+    Cache --> RateLimit
+    RateLimit --> Async
+    Async --> Perf
+    
+    Perf --> Docker
+    Perf --> API
+    Perf --> Cloud
+    
+    Docker --> LB
+    API --> LB
+    Cloud --> LB
+    
+    LB --> App1
+    LB --> App2
+    LB --> App3
+    
+    App1 --> Monitor
+    App2 --> Monitor
+    App3 --> Monitor
+    
+    Monitor --> Alerts
+    
+    style Development fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Optimization fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Deployment fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Production fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
+
+</div>
 
 ### Development Phase
 

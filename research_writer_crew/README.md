@@ -54,50 +54,130 @@ Research Writer Crew is an intelligent multi-agent system designed to automate t
 
 ## Architecture
 
+### Project Architecture
+
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Input["Input Layer"]
+        User[User Topic/Keywords]
+    end
+    
+    subgraph Crew["Research Writer Crew"]
+        subgraph Research["Research Phase"]
+            Researcher[Researcher Agent<br/>Web Research<br/>Data Gathering]
+            Analyzer[Analyzer Agent<br/>Information Synthesis<br/>Source Validation]
+        end
+        
+        subgraph Planning["Planning Phase"]
+            Outline[Outline Creator<br/>Structure Design<br/>Content Planning]
+        end
+        
+        subgraph Writing["Writing Phase"]
+            Writer[Writer Agent<br/>Content Generation<br/>SEO Optimization]
+        end
+        
+        subgraph QA["Quality Assurance"]
+            Editor[Editor Agent<br/>Review & Polish<br/>Fact Checking]
+        end
+    end
+    
+    subgraph External["External Services"]
+        Serper[Serper API<br/>Web Search]
+        OpenAI[OpenAI GPT-4<br/>AI Processing]
+    end
+    
+    subgraph Config["Configuration"]
+        Agents[agents.yaml]
+        Tasks[tasks.yaml]
+    end
+    
+    subgraph Output["Output"]
+        Article[Final Article<br/>Markdown Format]
+        Meta[Metadata<br/>Sources & Citations]
+    end
+    
+    User --> Researcher
+    Researcher --> Serper
+    Researcher --> Analyzer
+    Analyzer --> Outline
+    Outline --> Writer
+    Writer --> Editor
+    Editor --> Article
+    Editor --> Meta
+    
+    Researcher -.uses.-> OpenAI
+    Analyzer -.uses.-> OpenAI
+    Writer -.uses.-> OpenAI
+    Editor -.uses.-> OpenAI
+    
+    Agents -.configures.-> Crew
+    Tasks -.configures.-> Crew
+    
+    style Input fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Crew fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Research fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Planning fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Writing fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style QA fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style External fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+    style Config fill:#f5f5f5,stroke:#616161,stroke-width:2px
+    style Output fill:#fff8e1,stroke:#f57f17,stroke-width:2px
 ```
-┌──────────────────────────────────────────────────────┐
-│        Research Writer Crew System                   │
-├──────────────────────────────────────────────────────┤
-│                                                       │
-│  ┌────────────────────────────────────────────┐    │
-│  │      User Input: Topic or Keywords          │    │
-│  └────────────────────┬───────────────────────┘    │
-│                       │                             │
-│     ┌─────────────────┴──────────────────┐         │
-│     │                                    │         │
-│  ┌──▼──────────────┐          ┌─────────▼──┐     │
-│  │ Researcher      │          │ Analyzer   │     │
-│  │ Agent           │          │ Agent      │     │
-│  │                 │          │            │     │
-│  │ Web Research    │          │ Analysis & │     │
-│  │ Data Gathering  │          │ Synthesis  │     │
-│  └──┬──────────────┘          └────┬───────┘     │
-│     │                             │               │
-│  ┌──▼──────────────┐    ┌────────▼──┐            │
-│  │ Outline Creator│    │ Writer     │            │
-│  │ Agent          │    │ Agent      │            │
-│  │                │    │            │            │
-│  │ Structure &    │    │ Content    │            │
-│  │ Plan           │    │ Generation │            │
-│  └──┬─────────────┘    └────┬──────┘            │
-│     │                        │                   │
-│     └────────────┬───────────┘                   │
-│                  │                               │
-│          ┌───────▼────────┐                     │
-│          │ Editor Agent   │                     │
-│          │                │                     │
-│          │ Review &       │                     │
-│          │ Polish         │                     │
-│          └───────┬────────┘                     │
-│                  │                               │
-│          ┌───────▼────────┐                     │
-│          │  Output        │                     │
-│          │  Article       │                     │
-│          │  + Metadata    │                     │
-│          └────────────────┘                     │
-│                                                  │
-└──────────────────────────────────────────────────┘
+
+</div>
+
+### Content Creation Workflow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Main as Main Process
+    participant Researcher as Researcher Agent
+    participant Analyzer as Analyzer Agent
+    participant Outline as Outline Creator
+    participant Writer as Writer Agent
+    participant Editor as Editor Agent
+    participant Serper as Serper API
+    participant GPT as OpenAI GPT-4
+    
+    User->>Main: Submit Topic/Keywords
+    
+    Note over Main,Researcher: Research Phase
+    Main->>Researcher: Initialize Research Task
+    Researcher->>Serper: Web Search Query
+    Serper-->>Researcher: Search Results
+    Researcher->>GPT: Process & Extract Info
+    GPT-->>Researcher: Structured Data
+    
+    Note over Researcher,Analyzer: Analysis Phase
+    Researcher->>Analyzer: Transfer Research Data
+    Analyzer->>GPT: Synthesize Information
+    GPT-->>Analyzer: Organized Insights
+    
+    Note over Analyzer,Outline: Planning Phase
+    Analyzer->>Outline: Share Analyzed Data
+    Outline->>GPT: Generate Content Structure
+    GPT-->>Outline: Article Outline
+    
+    Note over Outline,Writer: Writing Phase
+    Outline->>Writer: Provide Outline + Research
+    Writer->>GPT: Generate Article Content
+    GPT-->>Writer: Draft Article
+    
+    Note over Writer,Editor: Quality Assurance
+    Writer->>Editor: Submit Draft
+    Editor->>GPT: Review & Polish
+    GPT-->>Editor: Final Article
+    
+    Editor->>Main: Deliver Final Output
+    Main->>User: Article + Metadata
 ```
+
+</div>
 
 ## Prerequisites
 

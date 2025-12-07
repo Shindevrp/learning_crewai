@@ -55,45 +55,110 @@ Cricket Performance Analysis is a sophisticated CrewAI-based system designed to 
 
 ## Architecture
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Input["User Input"]
+        PLAYER[Player Name + Year<br/>e.g., Virat Kohli 2023]
+    end
+    
+    subgraph Crew["Cricket Analysis Crew"]
+        subgraph Fetch["Data Collection"]
+            SF[Stats Fetcher Agent<br/>Gather Cricket Data]
+        end
+        
+        subgraph Calculate["Analysis"]
+            SC[Stats Calculator Agent<br/>Performance Metrics]
+        end
+        
+        subgraph Visualize["Visualization"]
+            GC[Graph Creator Agent<br/>Charts & Reports]
+        end
+    end
+    
+    subgraph External["Data Sources"]
+        SERPER[Serper API]
+        ESPN[ESPN Cricinfo]
+        ICC[ICC Statistics]
+        CRICKET[Cricket Archive]
+    end
+    
+    subgraph Config["Configuration"]
+        AGENTS[agents.yaml<br/>Agent Definitions]
+        TASKS[tasks.yaml<br/>Task Workflows]
+    end
+    
+    subgraph Output["Generated Reports"]
+        STATS[stats_for_cricketer.txt<br/>Statistical Analysis]
+        GRAPHS[Performance Graphs<br/>Visual Charts]
+        REPORT[Analysis Report<br/>Insights & Trends]
+    end
+    
+    PLAYER --> Fetch
+    Config --> Crew
+    
+    SF --> SERPER
+    SERPER --> ESPN
+    SERPER --> ICC
+    SERPER --> CRICKET
+    
+    Fetch --> Calculate
+    Calculate --> Visualize
+    
+    SF --> STATS
+    SC --> STATS
+    GC --> GRAPHS
+    GC --> REPORT
+    
+    style Input fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Crew fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Fetch fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Calculate fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Visualize fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style External fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Config fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    style Output fill:#fce4ec,stroke:#c2185b,stroke-width:2px
 ```
-┌──────────────────────────────────────────────────────┐
-│         Cricket Performance Analysis System          │
-├──────────────────────────────────────────────────────┤
-│                                                       │
-│  ┌────────────────────────────────────────────┐    │
-│  │         User Input (CLI Arguments)          │    │
-│  │  Cricketer Name + Year + Optional Filters  │    │
-│  └────────────────────┬───────────────────────┘    │
-│                       │                             │
-│     ┌─────────────────┴──────────────────┐         │
-│     │                                    │         │
-│  ┌──▼──────────────┐          ┌─────────▼──┐     │
-│  │ Stats Fetcher   │          │ Config Mgmt │     │
-│  │ Agent           │          │            │     │
-│  │                 │          │ agents.yaml│     │
-│  │ Data Collection │          │ tasks.yaml │     │
-│  └──┬──────────────┘          └────────────┘     │
-│     │                                             │
-│  ┌──▼──────────────┐        ┌────────────────┐  │
-│  │ Stats Calculator│        │ Graph Creator  │  │
-│  │ Agent           │        │ Agent          │  │
-│  │                 │        │                │  │
-│  │ Analysis &      │        │ Visualization  │  │
-│  │ Metrics         │        │ & Reports      │  │
-│  └──┬──────────────┘        └────┬───────────┘  │
-│     │                            │               │
-│     └────────────┬───────────────┘               │
-│                  │                               │
-│           ┌──────▼──────────┐                   │
-│           │  Output Files   │                   │
-│           │                 │                   │
-│           │ • Statistics    │                   │
-│           │ • Visualizations│                   │
-│           │ • Analysis      │                   │
-│           └─────────────────┘                   │
-│                                                  │
-└──────────────────────────────────────────────────┘
+
+</div>
+
+### Analysis Workflow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant StatsFetcher as Stats Fetcher
+    participant StatsCalc as Stats Calculator
+    participant GraphCreator as Graph Creator
+    
+    User->>System: Execute with Player & Year
+    System->>StatsFetcher: Task 1: Fetch Cricket Data
+    
+    StatsFetcher->>StatsFetcher: Query ESPN Cricinfo
+    StatsFetcher->>StatsFetcher: Query ICC Statistics
+    StatsFetcher->>StatsFetcher: Collect Format-wise Data
+    StatsFetcher-->>System: Raw Statistics
+    
+    System->>StatsCalc: Task 2: Calculate Metrics
+    StatsCalc->>StatsCalc: Compute Batting Avg
+    StatsCalc->>StatsCalc: Compute Strike Rate
+    StatsCalc->>StatsCalc: Analyze Form Trends
+    StatsCalc-->>System: Performance Metrics
+    
+    System->>GraphCreator: Task 3: Visualize Data
+    GraphCreator->>GraphCreator: Generate Performance Charts
+    GraphCreator->>GraphCreator: Create Comparison Graphs
+    GraphCreator->>GraphCreator: Build Analysis Report
+    GraphCreator-->>System: Visual Reports
+    
+    System->>User: Complete Analysis Package
 ```
+
+</div>
 
 ## Prerequisites
 

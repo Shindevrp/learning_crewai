@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="https://github.com/joaomdmoura/crewAI/raw/main/docs/crewai_logo.png" alt="CrewAI Logo" width="400"/>
+<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/People%20Hugging.png" alt="Multi-Agent Collaboration" width="200"/>
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
 [![CrewAI Framework](https://img.shields.io/badge/powered%20by-crewai-orange)](https://crewai.com)
@@ -384,40 +384,90 @@ YEAR=2023
 
 ## Architecture Overview
 
+<div align="center">
+
+```mermaid
+graph TB
+    subgraph Workspace["Learning CrewAI Workspace"]
+        subgraph Resources["Shared Resources"]
+            ENV[.env Configuration]
+            VENV[Python Virtual Environment]
+            DOCS[Documentation Hub]
+        end
+        
+        subgraph Projects["Multi-Agent Projects"]
+            STOCK[Stock Researcher<br/>Financial Analysis]
+            CRICKET[Cricket Analytics<br/>Sports Intelligence]
+            BUDGET[Budget Knowledge<br/>Policy Analysis]
+            WRITER[Research Writer<br/>Content Creation]
+        end
+        
+        subgraph Framework["CrewAI Framework"]
+            AGENTS[Specialized Agents]
+            TASKS[Orchestrated Tasks]
+            TOOLS[Integrated Tools]
+        end
+        
+        subgraph External["External Services"]
+            OPENAI[OpenAI GPT-4]
+            SERPER[Serper Search API]
+            DATA[Data Sources]
+        end
+    end
+    
+    ENV --> Projects
+    VENV --> Projects
+    DOCS --> Projects
+    
+    STOCK --> Framework
+    CRICKET --> Framework
+    BUDGET --> Framework
+    WRITER --> Framework
+    
+    Framework --> External
+    
+    AGENTS -.-> TASKS
+    TASKS -.-> TOOLS
+    
+    style Workspace fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style Resources fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Projects fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Framework fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style External fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                     Learning CrewAI Workspace                │
-├──────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌────────────────────┐  ┌─────────────────────────────┐    │
-│  │  Shared Resources  │  │  Individual Projects        │    │
-│  ├────────────────────┤  ├─────────────────────────────┤    │
-│  │ - .env file        │  │ • Stock Researcher          │    │
-│  │ - venv (Python)    │  │ • Cricket Performance       │    │
-│  │ - Dependencies     │  │ • Union Budget Knowledge    │    │
-│  │ - Logging config   │  │ • Research Writer Crew      │    │
-│  └────────────────────┘  └─────────────────────────────┘    │
-│                                                               │
-│                      ↓ CrewAI Framework ↓                   │
-│                                                               │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │         Multi-Agent Orchestration Layer             │   │
-│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐   │   │
-│  │  │   Agents    │ │    Tasks    │ │   Tools     │   │   │
-│  │  │             │ │             │ │             │   │   │
-│  │  │ Specialized │ │ Orchestrated│ │ Integrated  │   │   │
-│  │  │ AI Models   │ │ Workflows   │ │ Capabilities│   │   │
-│  │  └─────────────┘ └─────────────┘ └─────────────┘   │   │
-│  └──────────────────────────────────────────────────────┘   │
-│                                                               │
-│            ↓ External APIs & Data Sources ↓                 │
-│                                                               │
-│  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐         │
-│  │  OpenAI API  │ │  Serper API  │ │ Data Sources │         │
-│  └──────────────┘ └──────────────┘ └──────────────┘         │
-│                                                               │
-└──────────────────────────────────────────────────────────────┘
+
+</div>
+
+### System Flow
+
+<div align="center">
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Project
+    participant CrewAI
+    participant Agents
+    participant LLM
+    participant Tools
+    
+    User->>Project: Execute Command
+    Project->>CrewAI: Initialize Crew
+    CrewAI->>Agents: Assign Tasks
+    
+    loop Task Execution
+        Agents->>LLM: Process Information
+        LLM-->>Agents: Generate Response
+        Agents->>Tools: Use External Tools
+        Tools-->>Agents: Return Data
+    end
+    
+    Agents->>CrewAI: Complete Tasks
+    CrewAI->>Project: Aggregate Results
+    Project->>User: Deliver Output
 ```
+
+</div>
 
 ---
 
