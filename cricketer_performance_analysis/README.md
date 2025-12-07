@@ -454,12 +454,8 @@ git push origin feature/new-feature
 | 1.0.0 | Dec 6, 2025 | Production Ready |
 | 0.9.0 | Dec 5, 2025 | Beta |
 
-## License
-
-Part of the Learning CrewAI workspace.
 
 ---
 
 **Last Updated**: December 6, 2025
-**Status**: Production Ready 
-**Maintained By**: Learning CrewAI Team
+**Maintained By**: Shinde Vinayak Rao Patil

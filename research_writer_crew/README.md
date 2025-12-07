@@ -481,8 +481,7 @@ git push origin feature/new-feature
 ---
 
 **Last Updated**: December 6, 2025
-**Status**: Production Ready 
-**Maintained By**: Learning CrewAI Team
+**Maintained By**: Shinde Vinayak Rao Patil
 
 ### Method 3: Edit tasks.yaml Directly
 Edit `research_writer_crew/src/config/tasks.yaml` and replace `{topic}` with your desired topic:

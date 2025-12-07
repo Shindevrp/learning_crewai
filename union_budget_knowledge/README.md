@@ -532,10 +532,9 @@ This project is part of the Learning CrewAI workspace. See LICENSE file for deta
 ---
 
 **Last Updated**: December 6, 2025
-**Status**: Production Ready
-**Maintained By**: Learning CrewAI Team
+**Maintained By**: Shinde Vinayak Rao Patil
 
-## Understanding Your Crew
+## Understanding the Crew
 
 The Union Budget Knowledge Crew is composed of multiple AI agents, each with unique roles, goals, and tools:
 
@@ -543,17 +542,6 @@ The Union Budget Knowledge Crew is composed of multiple AI agents, each with uni
 2. **Budget Response Crew** - Handles Union Budget related queries with detailed analysis
 3. **Internet Response Crew** - Handles general knowledge queries using internet search
 
-These agents collaborate on a series of tasks, leveraging their collective skills to achieve complex objectives. The config files outline the capabilities and configurations of each agent in your crew.
-
-## Support
-
-For support, questions, or feedback regarding the Union Budget Knowledge Crew or crewAI, please refer to the crewAI documentation.
+These agents collaborate on a series of tasks, leveraging their collective skills to achieve complex objectives. The config files outline the capabilities and configurations of each agent in the crew.
 
 
-
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
