@@ -153,39 +153,33 @@ An **Agent** is an autonomous AI entity with a specific role, goal, and set of t
 
 ### Anatomy of an Agent
 
+<div align="center">
+
+```mermaid
+graph TB
+    Agent[Agent Structure]
+    
+    Role[Role<br/>What I am<br/>e.g., Content Writer]
+    Goal[Goal<br/>What I achieve<br/>e.g., Write engaging articles]
+    Backstory[Backstory<br/>My context<br/>e.g., Expert with 10yrs]
+    Tools[Tools<br/>What I use<br/>e.g., Web search, APIs]
+    LLM[LLM<br/>My brain<br/>e.g., GPT-4, Claude]
+    
+    Agent --> Role
+    Role --> Goal
+    Goal --> Backstory
+    Backstory --> Tools
+    Tools --> LLM
+    
+    style Agent fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style Role fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Goal fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Backstory fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Tools fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style LLM fill:#fce4ec,stroke:#c2185b,stroke-width:2px
 ```
-┌─────────────────────────────────────┐
-│           AGENT STRUCTURE           │
-├─────────────────────────────────────┤
-│                                     │
-│  ┌─────────────────────────────┐   │
-│  │  Role: "What I am"          │   │
-│  │  (e.g., Content Writer)     │   │
-│  └─────────────────────────────┘   │
-│              ↓                      │
-│  ┌─────────────────────────────┐   │
-│  │  Goal: "What I achieve"     │   │
-│  │  (e.g., Write engaging      │   │
-│  │   articles)                 │   │
-│  └─────────────────────────────┘   │
-│              ↓                      │
-│  ┌─────────────────────────────┐   │
-│  │  Backstory: "My context"    │   │
-│  │  (e.g., Expert with 10yrs)  │   │
-│  └─────────────────────────────┘   │
-│              ↓                      │
-│  ┌─────────────────────────────┐   │
-│  │  Tools: "What I use"        │   │
-│  │  (e.g., Web search, APIs)   │   │
-│  └─────────────────────────────┘   │
-│              ↓                      │
-│  ┌─────────────────────────────┐   │
-│  │  LLM: "My brain"            │   │
-│  │  (e.g., GPT-4, Claude)      │   │
-│  └─────────────────────────────┘   │
-│                                     │
-└─────────────────────────────────────┘
-```
+
+</div>
 
 ### Agent Properties
 
@@ -638,45 +632,30 @@ crew = Crew(
 
 ### Delegation Flow
 
-```
-DELEGATION WORKFLOW
-══════════════════
+<div align="center">
 
-1. Manager receives complex task
-   ┌─────────────┐
-   │   Manager   │
-   │   "I need   │
-   │   help!"    │
-   └──────┬──────┘
-          │
-          ↓ (delegates research)
-   ┌─────────────┐
-   │ Researcher  │
-   │ "Here's the │
-   │  data"      │
-   └──────┬──────┘
-          │
-          ↓ (returns results)
-   ┌─────────────┐
-   │   Manager   │
-   │   "Now I    │
-   │   need code"│
-   └──────┬──────┘
-          │
-          ↓ (delegates coding)
-   ┌─────────────┐
-   │  Developer  │
-   │ "Here's the │
-   │  solution"  │
-   └──────┬──────┘
-          │
-          ↓ (returns code)
-   ┌─────────────┐
-   │   Manager   │
-   │  "Task      │
-   │   complete!"│
-   └─────────────┘
+```mermaid
+sequenceDiagram
+    participant Manager
+    participant Researcher
+    participant Developer
+    
+    Note over Manager: 1. Receives Complex Task<br/>"I need help!"
+    
+    Manager->>Researcher: Delegate Research
+    Note over Researcher: Conducts Research
+    Researcher-->>Manager: "Here's the data"
+    
+    Note over Manager: Reviews Results<br/>"Now I need code"
+    
+    Manager->>Developer: Delegate Development
+    Note over Developer: Writes Solution
+    Developer-->>Manager: "Here's the solution"
+    
+    Note over Manager: Task Complete!
 ```
+
+</div>
 
 ---
 
@@ -3538,14 +3517,23 @@ print(result)
 
 #### Pattern 1: Linear Research Pipeline
 
-```
-RESEARCH PIPELINE
-═════════════════
+<div align="center">
 
-Research → Analysis → Writing → Review
-
-Best for: Content creation, reports, articles
+```mermaid
+graph LR
+    Research[Research<br/>Gather Data] --> Analysis[Analysis<br/>Process Info]
+    Analysis --> Writing[Writing<br/>Create Content]
+    Writing --> Review[Review<br/>Quality Check]
+    
+    style Research fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Analysis fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Writing fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Review fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
 ```
+
+**Best for**: Content creation, reports, articles
+
+</div>
 
 ```python
 # Research Pipeline
@@ -3558,16 +3546,31 @@ pipeline = Crew(
 
 #### Pattern 2: Parallel Investigation
 
-```
-PARALLEL PATTERN
-════════════════
+<div align="center">
 
-        ┌─ Research Topic A ─┐
-Start ──┼─ Research Topic B ─┼─→ Synthesize → Output
-        └─ Research Topic C ─┘
-
-Best for: Multi-source research, competitive analysis
+```mermaid
+graph TB
+    Start([Start]) --> TopicA[Research Topic A]
+    Start --> TopicB[Research Topic B]
+    Start --> TopicC[Research Topic C]
+    
+    TopicA --> Synthesize[Synthesize Results]
+    TopicB --> Synthesize
+    TopicC --> Synthesize
+    
+    Synthesize --> Output([Final Output])
+    
+    style Start fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style TopicA fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style TopicB fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style TopicC fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Synthesize fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style Output fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
+
+**Best for**: Multi-source research, competitive analysis
+
+</div>
 
 ```python
 # Hierarchical crew for parallel execution
@@ -3581,14 +3584,25 @@ parallel_crew = Crew(
 
 #### Pattern 3: Iterative Refinement
 
-```
-ITERATIVE PATTERN
-═════════════════
+<div align="center">
 
-Create → Review → Refine → Review → Final
-
-Best for: High-quality outputs, critical content
+```mermaid
+graph LR
+    Create[Create<br/>Initial Draft] --> Review1[Review<br/>Check Quality]
+    Review1 --> Refine[Refine<br/>Improve Content]
+    Refine --> Review2[Review<br/>Final Check]
+    Review2 --> Final[Final<br/>Output]
+    
+    style Create fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Review1 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style Refine fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Review2 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style Final fill:#fff9c4,stroke:#fbc02d,stroke-width:3px
 ```
+
+**Best for**: High-quality outputs, critical content
+
+</div>
 
 ```python
 def iterative_workflow(crew, max_iterations=3):
@@ -3607,14 +3621,21 @@ def iterative_workflow(crew, max_iterations=3):
 
 #### Pattern 4: Multi-Stage Pipeline
 
-```
-MULTI-STAGE PIPELINE
-═══════════════════
+<div align="center">
 
-Stage 1: Planning → Stage 2: Execution → Stage 3: Quality Control
-
-Best for: Complex projects, production workflows
+```mermaid
+graph LR
+    Stage1[Stage 1<br/>Planning<br/>Strategy & Design] --> Stage2[Stage 2<br/>Execution<br/>Implementation]
+    Stage2 --> Stage3[Stage 3<br/>Quality Control<br/>Testing & Validation]
+    
+    style Stage1 fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    style Stage2 fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    style Stage3 fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
 ```
+
+**Best for**: Complex projects, production workflows
+
+</div>
 
 ```python
 # Stage 1: Planning
