@@ -5,7 +5,7 @@
 <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/People%20Hugging.png" alt="Multi-Agent Collaboration" width="200"/>
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
-[![CrewAI Framework](https://img.shields.io/badge/powered%20by-crewai-orange)](https://crewai.com)
+
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Status](https://img.shields.io/badge/status-production--ready-brightgreen)](README.md)
 
